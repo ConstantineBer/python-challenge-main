@@ -50,7 +50,7 @@ def list_products(**kwargs) -> List[ProductSchema]:
     :param kwargs: product_name: If set, returns only the products with the name equal to the value
     :return: List of products
     """
-    best_seller: bool = kwargs.get("best_seller", False)
+    best_seller: bool = kwargs.get("best_seller", None)
     rating_higher_than: str = kwargs.get("rating_higher_than", None)
     product_name: str = kwargs.get("product_name", None)
 

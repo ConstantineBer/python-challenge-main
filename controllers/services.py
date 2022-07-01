@@ -5,7 +5,7 @@ from controllers.schemas import ProductSchema
 
 def filter_products(
     products: List[ProductSchema],
-    best_seller: bool = False,
+    best_seller: Optional[bool] = None,
     rating_higher_than: Optional[str] = None,
     product_name: Optional[str] = None,
 ) -> List[ProductSchema]:
