@@ -9,8 +9,14 @@ from controllers import main
 router: APIRouter = APIRouter()
 
 
-@router.get('/list_products', response_model=List[ProductResponseSchema], description='List products')
-def list_products(best_seller=False, rating_higher_than=None, product_name=None) -> List[ProductResponseSchema]:
+@router.get(
+    "/list_products",
+    response_model=List[ProductResponseSchema],
+    description="List products",
+)
+def list_products(
+    best_seller=False, rating_higher_than=None, product_name=None
+) -> List[ProductResponseSchema]:
     """
     Returns a list with all products in the page
 
@@ -22,11 +28,11 @@ def list_products(best_seller=False, rating_higher_than=None, product_name=None)
     products = main.list_products(
         best_seller=best_seller,
         rating_higher_than=rating_higher_than,
-        product_name=product_name
+        product_name=product_name,
     )
     return [ProductResponseSchema(**product.dict()) for product in products]
 
 
 _all__ = [
-    'router',
+    "router",
 ]

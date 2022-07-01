@@ -11,5 +11,5 @@ class ProductResponseSchema(BaseModel):
 
 
 __all__ = [
-    'ProductResponseSchema',
+    "ProductResponseSchema",
 ]

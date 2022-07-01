@@ -30,12 +30,10 @@ class BaseScrapper:
 
         :return: list of products
         """
-        with open(self.html_page_url, 'r') as f:
-            soup: BeautifulSoup = BeautifulSoup(f.read(), 'html.parser')
+        with open(self.html_page_url, "r") as f:
+            soup: BeautifulSoup = BeautifulSoup(f.read(), "html.parser")
             products_list: ResultSet = self.__get_product_entities_by_class(
-                soup,
-                self.html_tag,
-                self.classes_to_search
+                soup, self.html_tag, self.classes_to_search
             )
             return self.perform_data_to_model(products_list, self.model)
 
@@ -54,7 +52,9 @@ class BaseScrapper:
         raise NotImplementedError
 
     @staticmethod
-    def __get_product_entities_by_class(soup: BeautifulSoup, html_tag: str, classes_to_search: str) -> ResultSet:
+    def __get_product_entities_by_class(
+        soup: BeautifulSoup, html_tag: str, classes_to_search: str
+    ) -> ResultSet:
         """
         Get the product entities by class.
 
@@ -63,10 +63,10 @@ class BaseScrapper:
         :param classes_to_search: classes to search products of e-commerce site
         :return: list of raw products
         """
-        products_list: ResultSet = soup.find_all(html_tag, {'class': classes_to_search})
+        products_list: ResultSet = soup.find_all(html_tag, {"class": classes_to_search})
         return products_list
 
 
 __all__: List[str] = [
-    'BaseScrapper',
+    "BaseScrapper",
 ]

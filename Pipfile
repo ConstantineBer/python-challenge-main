@@ -13,6 +13,8 @@ lxml = "*"
 anyio = "*"
 requests = "*"
 pytest = "*"
+flake8 = "*"
+black = "*"
 
 [dev-packages]
 

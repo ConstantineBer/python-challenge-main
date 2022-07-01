@@ -24,13 +24,19 @@ class ProductScrapper(BaseScrapper):
         products: List[BaseModel] = []
         for product in products_list:
             model_instance: ProductSchema = model(
-                name=get_text(product.find('span', {'class': 'a-size-base-plus a-color-base a-text-normal'})),
-                price=perform_str_to_float(
-                    get_text(product.find('span', {'class': 'a-price-whole'}))
-                    + get_text(product.find('span', {'class': 'a-price-fraction'}))
+                name=get_text(
+                    product.find(
+                        "span", {"class": "a-size-base-plus a-color-base a-text-normal"}
+                    )
                 ),
-                rating=perform_rating_to_float(get_text(product.find('span', {'class': 'a-icon-alt'}))),
-                label=get_text(product.find('span', {'class': 'a-badge-text'}))
+                price=perform_str_to_float(
+                    get_text(product.find("span", {"class": "a-price-whole"}))
+                    + get_text(product.find("span", {"class": "a-price-fraction"}))
+                ),
+                rating=perform_rating_to_float(
+                    get_text(product.find("span", {"class": "a-icon-alt"}))
+                ),
+                label=get_text(product.find("span", {"class": "a-badge-text"})),
             )
             products.append(model_instance)
         return products
@@ -45,14 +51,14 @@ def list_products(**kwargs) -> List[BaseModel]:
     :param kwargs: product_name: If set, returns only the products with the name equal to the value
     :return: List of products
     """
-    best_seller: bool = kwargs.get('best_seller', False)
-    rating_higher_than: int = kwargs.get('rating_higher_than', None)
-    product_name: str = kwargs.get('product_name', None)
+    best_seller: bool = kwargs.get("best_seller", False)
+    rating_higher_than: int = kwargs.get("rating_higher_than", None)
+    product_name: str = kwargs.get("product_name", None)
 
     scrapper: ProductScrapper = ProductScrapper(
-        'pages/content.html',
-        'div',
-        'sg-col-4-of-12 s-result-item s-asin sg-col-4-of-16 sg-col sg-col-4-of-20',
+        "pages/content.html",
+        "div",
+        "sg-col-4-of-12 s-result-item s-asin sg-col-4-of-16 sg-col sg-col-4-of-20",
         ProductSchema,
     )
     products_list_result: List[ProductSchema] = scrapper.products_list
@@ -70,5 +76,5 @@ def list_products(**kwargs) -> List[BaseModel]:
 
 
 __all__: List[str] = [
-    'list_products',
+    "list_products",
 ]
