@@ -21,7 +21,7 @@ class ProductScrapper(BaseScrapper):
         :param model: pydantic model to struct the products
         :return: list of structured data with products
         """
-        products: List[BaseModel] = []
+        products: List[ProductSchema] = []
         for product in products_list:
             model_instance: ProductSchema = model(
                 name=get_text(
@@ -42,7 +42,7 @@ class ProductScrapper(BaseScrapper):
         return products
 
 
-def list_products(**kwargs) -> List[BaseModel]:
+def list_products(**kwargs) -> List[ProductSchema]:
     """
     Returns a list with all products in the page
 

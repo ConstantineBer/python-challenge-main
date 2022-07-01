@@ -6,7 +6,7 @@ from app.api import router
 
 
 def get_application() -> FastAPI:
-    application = FastAPI(
+    application: FastAPI = FastAPI(
         title=settings.PROJECT_NAME,
         debug=settings.DEBUG,
         version=settings.PROJECT_VERSION,
