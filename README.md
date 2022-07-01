@@ -66,7 +66,7 @@ Tip:
 Access http://localhost:8000/docs to use the built-in interface.
 
 
-### Running the API for production
+## Running the API for production
 Running the API using `docker`:
   - docker build -t python-challenge-main .
   - docker run -d --name python-challenge-main-container -p 8000:8000 python-challenge-main
