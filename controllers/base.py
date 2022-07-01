@@ -10,18 +10,15 @@ class BaseScrapper:
         url: str,
         html_tag: str,
         classes_to_search: str,
-        model: BaseModel,
     ) -> None:
         """
         :param url: url of the html page
         :param html_tag: html tag to search products of e-commerce site
         :param classes_to_search: classes to search products of e-commerce site
-        :param model: pydantic model to struct the products
         """
         self.html_page_url = url
         self.html_tag = html_tag
         self.classes_to_search = classes_to_search
-        self.model = model
         self.products_list = self.__perform()
 
     def __perform(self) -> List[BaseModel]:
@@ -35,18 +32,16 @@ class BaseScrapper:
             products_list: ResultSet = self.__get_product_entities_by_class(
                 soup, self.html_tag, self.classes_to_search
             )
-            return self.perform_data_to_model(products_list, self.model)
+            return self.perform_data_to_model(products_list)
 
     def perform_data_to_model(
         self,
         products_list: ResultSet,
-        model: BaseModel,
     ) -> List[BaseModel]:
         """
         Performing the raw data to structured data.
 
         :param products_list: list of raw data with products
-        :param model: pydantic model to struct the products
         :return: list of structured data with products
         """
         raise NotImplementedError

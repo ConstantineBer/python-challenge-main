@@ -11,19 +11,17 @@ from controllers.utils import get_text, perform_str_to_float, perform_rating_to_
 class ProductScrapper(BaseScrapper):
     def perform_data_to_model(
         self,
-        products_list: ResultSet,
-        model: BaseModel,
+        products_list: ResultSet
     ) -> List[BaseModel]:
         """
         Performing the raw data to structured data.
 
         :param products_list: list of raw data with products
-        :param model: pydantic model to struct the products
         :return: list of structured data with products
         """
         products: List[ProductSchema] = []
         for product in products_list:
-            model_instance: ProductSchema = model(
+            model_instance: ProductSchema = ProductSchema(
                 name=get_text(
                     product.find(
                         "span", {"class": "a-size-base-plus a-color-base a-text-normal"}
@@ -59,7 +57,6 @@ def list_products(**kwargs) -> List[ProductSchema]:
         "pages/content.html",
         "div",
         "sg-col-4-of-12 s-result-item s-asin sg-col-4-of-16 sg-col sg-col-4-of-20",
-        ProductSchema,
     )
     products_list_result: List[ProductSchema] = scrapper.products_list
     for product in products_list_result[:]:
