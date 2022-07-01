@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 from controllers.base import BaseScrapper
 from controllers.schemas import ProductSchema
+from controllers.services import filter_products
 from controllers.utils import get_text, perform_str_to_float, perform_rating_to_float
 
 
@@ -50,7 +51,7 @@ def list_products(**kwargs) -> List[ProductSchema]:
     :return: List of products
     """
     best_seller: bool = kwargs.get("best_seller", False)
-    rating_higher_than: int = kwargs.get("rating_higher_than", None)
+    rating_higher_than: str = kwargs.get("rating_higher_than", None)
     product_name: str = kwargs.get("product_name", None)
 
     scrapper: ProductScrapper = ProductScrapper(
@@ -59,17 +60,12 @@ def list_products(**kwargs) -> List[ProductSchema]:
         "sg-col-4-of-12 s-result-item s-asin sg-col-4-of-16 sg-col sg-col-4-of-20",
     )
     products_list_result: List[ProductSchema] = scrapper.products_list
-    for product in products_list_result[:]:
-        should_to_remove = False
-        if best_seller and not product.best_seller:
-            should_to_remove = True
-        if rating_higher_than and product.rating <= float(rating_higher_than):
-            should_to_remove = True
-        if product_name and product.name != product_name:
-            should_to_remove = True
-        if should_to_remove:
-            products_list_result.remove(product)
-    return products_list_result
+    return filter_products(
+        products_list_result,
+        best_seller=best_seller,
+        rating_higher_than=rating_higher_than,
+        product_name=product_name,
+    )
 
 
 __all__: List[str] = [
